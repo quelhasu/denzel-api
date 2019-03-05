@@ -51,6 +51,18 @@ app.get('/movies-all', (req, res) => {
     });
 })
 
+app.get('/movies', (req, res) => {
+  collection.aggregate([
+    {"$match": { "metascore": { "$gte": 77 } }},
+    {"$sample":{"size":1}}
+  ]).toArray((error, result) => {
+    if(error) {
+        return res.status(500).send(error);
+    }
+    // var awesome = result.filter(movie => movie.metascore >= 77);
+    res.send(result);
+});
+})
 
 app.listen(port);
 console.log(`Server Running at localhost:${port}`);
