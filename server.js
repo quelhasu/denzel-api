@@ -24,6 +24,24 @@ client.connect(config.DB, function (err, db) {
   }
 });
 
+app.get('/hello', (req, res) => {
+  res.json({ "hello": "world" });
+}
+);
+
+app.get('/movies/populate', (req, res) => {
+  imdb.getMovies(DENZEL_IMDB_ID).then(movies => {
+    collection.insertMany(movies, (error, result) => {
+      if(error) {
+          return res.status(500).send(error);
+      }
+      res.json(result.result);
+  });
+    // res.json({"total": movies.length});
+    // res.send(movies);
+  });
+})
+
 
 app.listen(port);
 console.log(`Server Running at localhost:${port}`);
