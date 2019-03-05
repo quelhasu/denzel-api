@@ -7,7 +7,6 @@ const port = 9292;
 const app = express();
 
 const DENZEL_IMDB_ID = 'nm0000243';
-const DATABASE_NAME = 'denzeldb';
 
 const client = mongodb.MongoClient;
 
@@ -18,9 +17,9 @@ client.connect(config.DB, function (err, db) {
     console.log('database is not connected')
   }
   else {
-    database = db.db(DATABASE_NAME);
+    database = db.db(config.DATABASE_NAME);
     collection = database.collection("movies");
-    console.log(`connected to ${DATABASE_NAME}!!`)
+    console.log(`connected to ${config.DATABASE_NAME}!!`)
   }
 });
 
