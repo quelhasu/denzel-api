@@ -63,5 +63,30 @@ app.get('/movies', (req, res) => {
 });
 })
 
+
+app.get('/movies/search', (req, res) => {
+  var limit = Number(req.query.limit) || 5;
+  var metascore = Number(req.query.metascore) || 0;
+  if(limit || metascore){
+    collection.aggregate([
+      {"$match": { "metascore": { "$gte": metascore } }},
+      {"$sample": {"size": limit}}
+    ]).toArray((err, result) => {
+      if(err) return res.status(500).send(err);
+      res.json({'limit': limit, 'metascore': metascore, 'results': result});
+    })
+  }
+})
+
+app.get('/movies/:id', (req, res) => {
+  var id = req.params.id;
+  collection.findOne({"id": id}, (err, result) => {
+    if (err) return res.status(500).send(error);
+    if(result) res.send(result);
+    else res.json({"error":`${id} movie does not exist!`});
+  });
+})
+
+
 app.listen(port);
 console.log(`Server Running at localhost:${port}`);
