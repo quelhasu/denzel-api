@@ -2,18 +2,29 @@ const express = require('express');
 const mongodb = require('mongodb');
 const imdb = require('./sandbox').Sandbox;
 const bodyParser = require('body-parser')
+const graphqlHTTP = require('express-graphql');
+const {GraphQLSchema} = require('graphql');
 
+const {queryType} = require('./src/query.js');
 const config = require('./db');
+
 const port = 9292;
 const app = express();
 
 const DENZEL_IMDB_ID = 'nm0000243';
-
 const client = mongodb.MongoClient;
+
+const schema = new GraphQLSchema({ query: queryType });
 
 var database, collection;
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  graphiql: true,
+}));
+
 
 client.connect(config.DB, function (err, db) {
   if (err) {
@@ -39,8 +50,6 @@ app.get('/movies/populate', (req, res) => {
       }
       res.json(result.result);
   });
-    // res.json({"total": movies.length});
-    // res.send(movies);
   });
 })
 
