@@ -1,6 +1,7 @@
 const express = require('express');
 const mongodb = require('mongodb');
 const imdb = require('./sandbox').Sandbox;
+const bodyParser = require('body-parser')
 
 const config = require('./db');
 const port = 9292;
@@ -11,6 +12,8 @@ const DENZEL_IMDB_ID = 'nm0000243';
 const client = mongodb.MongoClient;
 
 var database, collection;
+
+app.use(bodyParser.json())
 
 client.connect(config.DB, function (err, db) {
   if (err) {
@@ -85,6 +88,16 @@ app.get('/movies/:id', (req, res) => {
     if(result) res.send(result);
     else res.json({"error":`${id} movie does not exist!`});
   });
+})
+
+app.post('/movies/:id', (req, res) => {
+  var id = req.params.id;
+  console.log(req.body);
+  collection.updateOne({"id":id}, {"$set":{"review":req.body}}, (err, result) => {
+    if(err) return res.status(500).send(error);
+    console.log(result.result);
+    res.end("ok");
+  })
 })
 
 
