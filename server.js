@@ -13,7 +13,8 @@ const DENZEL_IMDB_ID = 'nm0000243';
 
 mongoUtil.connectToMongo(err => {
   const { queryType } = require('./src/query.js');
-  const schema = new GraphQLSchema({ query: queryType });
+  const { mutationType } = require('./src/mutation.js');
+  const schema = new GraphQLSchema({ query: queryType, mutation: mutationType });
 
   var collection = mongoUtil.getDB().collection("movies");
 
