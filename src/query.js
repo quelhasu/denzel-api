@@ -27,6 +27,7 @@ const queryType = new GraphQLObjectType({
           args: {
               id: { type: GraphQLString}
           },
+          description: "Find movie by id or show a random awesome movie.",
           resolve: function (source, args) {
             if(args.id) return collection.find({"id": args.id}).toArray();
             else return collection.aggregate([
@@ -37,6 +38,7 @@ const queryType = new GraphQLObjectType({
       },
       movies:{
         type: new GraphQLList(movieType),
+        description: "Show all movies.",
         resolve: function(source, args){
           return collection.find({}).toArray();
         }

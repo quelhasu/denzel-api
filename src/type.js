@@ -1,3 +1,4 @@
+const GraphQLJSON = require ('graphql-type-json');
 const {
   GraphQLObjectType,
   GraphQLID,
@@ -14,6 +15,7 @@ movieType = new GraphQLObjectType({
       synopsis: { type: GraphQLString },
       title: { type: GraphQLString },
       year: { type: GraphQLInt },
+      review: {type: GraphQLJSON}
   }
 });
 
