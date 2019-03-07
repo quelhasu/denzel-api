@@ -34,6 +34,12 @@ const queryType = new GraphQLObjectType({
               { "$sample": { "size": 1 } }
             ]).toArray();
           }
+      },
+      movies:{
+        type: new GraphQLList(movieType),
+        resolve: function(source, args){
+          return collection.find({}).toArray();
+        }
       }
     }
 });
