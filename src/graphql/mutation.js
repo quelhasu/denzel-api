@@ -1,6 +1,6 @@
 var mongoUtil = require('../db.js');
 var collection = mongoUtil.getDB().collection("movies");
-const imdb = require('../sandbox').Sandbox;
+const imdb = require('../../sandbox').Sandbox;
 const DENZEL_IMDB_ID = 'nm0000243';
 
 const GraphQLJSON = require ('graphql-type-json');

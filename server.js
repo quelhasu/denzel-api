@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const graphqlHTTP = require('express-graphql');
 const { GraphQLSchema } = require('graphql');
 
-var mongoUtil = require('./db.js');
+var mongoUtil = require('./src/db.js');
 
 const port = 9292;
 const app = express();
@@ -12,8 +12,8 @@ const app = express();
 const DENZEL_IMDB_ID = 'nm0000243';
 
 mongoUtil.connectToMongo(err => {
-  const { queryType } = require('./src/query.js');
-  const { mutationType } = require('./src/mutation.js');
+  const { queryType } = require('./src/graphql/query.js');
+  const { mutationType } = require('./src/graphql/mutation.js');
   const schema = new GraphQLSchema({ query: queryType, mutation: mutationType });
 
   var collection = mongoUtil.getDB().collection("movies");
