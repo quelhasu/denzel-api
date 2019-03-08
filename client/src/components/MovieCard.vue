@@ -1,33 +1,28 @@
 <template>
   <div class="cards">
-    <div class="card">
-      <img class="card-image" src="https://placeimg.com/400/800/any">
+    <div class="card animated bounce-in">
+      <img class="card-image" :src="movie.poster">
       <div class="card-divider">
         <div class="vote">
           <i class="fas fa-film"/>
         </div>
       </div>
       <div class="card-body">
-        <h2 class="body-title">Title</h2>
-        <div class="body-inline">
-          <p class="body-inline-title">Actors</p>
-          <p class="body-inline-text">Name,</p>
-        </div>
-        <div class="body-inline">
-          <p class="body-inline-title">Director</p>
-          <p class="body-inline-text">Name</p>
+        <h2 class="body-title">{{movie.title}}</h2>
+        <div class="body-synopsis">
+          <p>{{movie.synopsis}}</p>
         </div>
       </div>
       <div class="card-footer">
         <div class="card-footer-left">
           <i class="fas fa-calendar"/>
-          Year
+          {{movie.year}}
         </div>
         <div style="display:flex">
-          <p style>genre</p>
+          <p style>{{movie.metascore}} / 100</p>
         </div>
         <div class="card-footer-right">
-          Average
+          {{movie.rating}}
           <i class="fas fa-star"/>
         </div>
       </div>
@@ -45,11 +40,24 @@ export default {
   },
   data: function() {
     return {
-      movie: {}
+      movie: {},
+      errors: []
     };
   },
   methods: {
-    async getRandomMovie() {}
+    async getRandomMovie() {
+      await axios
+        .get("http://localhost:9292/movies")
+        .then(resp => {
+          this.movie = resp.data[0];
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    }
+  },
+  mounted() {
+    this.getRandomMovie();
   }
 };
 </script>
