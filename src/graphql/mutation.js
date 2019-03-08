@@ -34,7 +34,8 @@ const mutationType = new GraphQLObjectType({
       description: "Populate denze db with movies.",
       resolve: (source, args) => {
         return imdb.getMovies(DENZEL_IMDB_ID).then(movies => {
-          return collection.insertMany(movies).then(res => {
+          collection.ensureIndex({id:1}, {unique:true});
+          return collection.insertMany(movies, {ordered: false}).then(res => {
             return res.result;
           });
         });

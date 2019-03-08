@@ -32,11 +32,12 @@ mongoUtil.connectToMongo(err => {
 
   app.get('/movies/populate', (req, res) => {
     imdb.getMovies(DENZEL_IMDB_ID).then(movies => {
-      collection.insertMany(movies, (error, result) => {
+      collection.ensureIndex({id:1}, {unique:true});
+      collection.insertMany(movies,{ ordered: false }, (error, result) => {
         if (error) {
           return res.status(500).send(error);
         }
-        res.json(result.result);
+        res.json(result);
       });
     });
   })
