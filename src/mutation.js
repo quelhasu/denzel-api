@@ -1,6 +1,6 @@
 var mongoUtil = require('../db.js');
 var collection = mongoUtil.getDB().collection("movies");
-
+const imdb = require('../sandbox').Sandbox;
 const DENZEL_IMDB_ID = 'nm0000243';
 
 const GraphQLJSON = require ('graphql-type-json');
@@ -27,6 +27,17 @@ const mutationType = new GraphQLObjectType({
       resolve: (source, args) => {
         collection.updateOne({ "id": args.id }, { "$set": { "review": args.review } });
         return collection.findOne({"id": args.id});
+      }
+    },
+    populateDenzelDb:{
+      type: GraphQLJSON,
+      description: "Populate denze db with movies.",
+      resolve: (source, args) => {
+        return imdb.getMovies(DENZEL_IMDB_ID).then(movies => {
+          return collection.insertMany(movies).then(res => {
+            return res.result;
+          });
+        });
       }
     }
   }
