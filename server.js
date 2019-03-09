@@ -11,6 +11,16 @@ const app = express();
 
 const DENZEL_IMDB_ID = 'nm0000243';
 
+// Definition des CORS
+app.use(function(req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 mongoUtil.connectToMongo(err => {
   const { queryType } = require('./src/graphql/query.js');
   const { mutationType } = require('./src/graphql/mutation.js');

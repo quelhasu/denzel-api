@@ -1,7 +1,7 @@
 version: "2"
 services:
-  app:
-    container_name: app
+  api:
+    container_name: api
     restart: always
     build: .
     ports:
@@ -14,6 +14,18 @@ services:
       - mongo
     environment:
       WAIT_HOSTS: mongo:27017
+  frontend:
+    container_name: client
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    environment:
+      WAIT_HOSTS: api:9292
   mongo:
     container_name: mongo
     image: mongo

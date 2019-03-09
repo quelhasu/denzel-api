@@ -1,6 +1,7 @@
 const mongodb = require('mongodb');
 const client = mongodb.MongoClient;
-const URL = 'mongodb://localhost:27017/denzel';
+// const URL = 'mongodb://localhost:27017/denzel';
+const URL = 'mongodb://mongo/denzel';
 const DATABASE_NAME = 'denzeldb'
 
 
