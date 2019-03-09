@@ -1,6 +1,6 @@
 <template>
   <div class="cards">
-    <div class="card animated bounce-in">
+    <div class="card animated bounce-in" v-on:click="goToMovie(movie)">
       <img class="card-image" :src="movie.poster">
       <div class="card-divider">
         <div class="vote">
@@ -54,6 +54,9 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+    },
+    goToMovie(movie) {
+      window.open(movie.link, "_blank");
     }
   },
   mounted() {
