@@ -184,3 +184,5 @@ dist
 exports
 
 data/
+
+.env
