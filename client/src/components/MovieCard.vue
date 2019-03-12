@@ -47,7 +47,7 @@ export default {
   methods: {
     async getRandomMovie() {
       await axios
-        .get("http://localhost:9292/movies")
+        .get("https://denzel-api.herokuapp.com/movies")
         .then(resp => {
           this.movie = resp.data[0];
         })

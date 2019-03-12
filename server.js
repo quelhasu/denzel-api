@@ -63,7 +63,7 @@ mongoUtil.connectToMongo(err => {
 
   app.get('/movies', (req, res) => {
     collection.aggregate([
-      { "$match": { "metascore": { "$gte": 77 } } },
+      { "$match": { "metascore": { "$gte": 70 } } },
       { "$sample": { "size": 1 } }
     ]).toArray((error, result) => {
       if (error) {
