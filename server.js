@@ -109,6 +109,6 @@ mongoUtil.connectToMongo(err => {
   })
 
 
-  app.listen(port);
+  app.listen(process.env.PORT || port);
   console.log(`Server Running at localhost:${port}`);
 });
