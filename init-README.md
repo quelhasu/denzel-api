@@ -1,21 +1,87 @@
- <img src="http://iconshow.me/media/images/Mixed/small-n-flat-icon/png/512/movie.png" align="right" width="100">
+# DENZEL
 
-# Denzel API
-> API for Denzel project
+> The must-watch Denzel's movies
 
-You can visit this [link](https://denzel-api.herokuapp.com/movies) to seet it work.
+![denzel](https://m.media-amazon.com/images/M/MV5BMjE5NDU2Mzc3MV5BMl5BanBnXkFtZTcwNjAwNTE5OQ@@._V1_SY1000_SX750_AL_.jpg)
 
-[Express](https://expressjs.com/) Node.js web application framework.
-[GraphQL](https://graphql.org/) A query language for API.
-[MongoDB](https://www.mongodb.com/) Open Source Document Database.
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
-This project is a micro-service of _Denzel_ project including the [client](https://github.com/quelhasu/denzel-movie-client).  
+- [🐣 Introduction](#-introduction)
+- [🎯 Objectives](#-objectives)
+- [👩‍💻 Just tell me what to do](#%E2%80%8D-just-tell-me-what-to-do)
+- [🏃‍♀️ Steps to do](#%E2%80%8D-steps-to-do)
+  - [Definition and Configuration](#definition-and-configuration)
+  - [REST endpoints to implement](#rest-endpoints-to-implement)
+    - [`GET /movies/populate`](#get-moviespopulate)
+    - [`GET /movies`](#get-movies)
+    - [`GET /movies/:id`](#get-moviesid)
+    - [`GET /movies/search`](#get-moviessearch)
+    - [POST /movies/:id](#post-moviesid)
+  - [GraphQL endpoints to implement](#graphql-endpoints-to-implement)
+    - [(A suggested) Schema](#a-suggested-schema)
+  - [Bonus - The Client side](#bonus---the-client-side)
+- [🛣️ Related course](#-related-course)
+- [Licence](#licence)
 
-[Initial README](init-README.md)
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## REST endpoints
+## 🐣 Introduction
 
-### `GET /movies/populate`
+Denzel Washington is one of my favorite actor.
+
+He won 2 Oscars. [Another 82 wins & 166 nominations](https://www.imdb.com/name/nm0000243/awards?ref_=nm_awd)
+
+## 🎯 Objectives
+
+**Build a REST and GRAPHQL API to get the must-watch Denzel's movies**.
+
+## 👩‍💻 Just tell me what to do
+
+<ol>
+<li>Fork the project via `github`
+
+![fork](./fork.png)
+</li>
+
+<li>Clone your forked repository project `https://github.com/YOUR_USERNAME/denzel`
+
+```sh
+❯ cd /path/to/workspace
+❯ git clone git@github.com:YOUR_USERNAME/denzel.git
+```
+</li>
+
+<li><strong>Do things</strong></li>
+<li>Commit and push your different modifications
+
+```sh
+❯ cd /path/to/workspace/denzel
+❯ git add -A && git commit -m "feat(movies): get a random movie"
+❯ git push origin master
+```
+</li>
+</ol>
+
+**Note**:
+
+* [why following a commit message convention?](https://www.conventionalcommits.org)
+* if you catch an error about authentication, [add your ssh to your github profile](https://help.github.com/articles/connecting-to-github-with-ssh/).
+* If you need some helps on git commands, read [git - the simple guide](http://rogerdudler.github.io/git-guide/)
+
+## 🏃‍♀️ Steps to do
+
+### Definition and Configuration
+
+* A **must-watch** movie is a movie with a `metascore` higher than `70`.
+* API should listen locally the port `9292`.
+* Data should be stored in MongoDB. Backed either with a DaaS: [mLab](https://mlab.com), [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) etc... Either with a [container Docker](https://hub.docker.com/r/mvertes/alpine-mongo).
+* To test and check your API, you should use a client like [Insomnia](https://insomnia.rest) or [Postman](https://www.getpostman.com/products)
+
+### REST endpoints to implement
+
+#### `GET /movies/populate`
 
 Populate the database with all the [Denzel's movies from IMDb](https://www.imdb.com/name/nm0000243).
 
@@ -61,7 +127,7 @@ Start [node sandbox.js](./sandbox.js) for an usage example.
 ]
 ```
 
-### `GET /movies`
+#### `GET /movies`
 
 Fetch a random **must-watch** movie.
 
@@ -80,40 +146,7 @@ Fetch a random **must-watch** movie.
 }
 ```
 
-### `GET /movies-all`
-
-Fetch **all** movies
-
-```sh
-❯ curl -H "Accept: application/json" http://localhost:9292/movies
-[
-  {
-    "id": "tt0765429",
-    "link": "https://www.imdb.com/title/tt0765429/?ref_=nm_flmg_act_13",
-    "metascore": 76,
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTkyNzY5MDA5MV5BMl5BanBnXkFtZTcwMjg4MzI3MQ@@._V1_UY268_CR4,0,182,268_AL_.jpg",
-    "rating": 7.8,
-    "synopsis": "An outcast New York City cop is charged with bringing down Harlem drug lord Frank Lucas, whose real life inspired this partly biographical film.",
-    "title": "American Gangster (2007)",
-    "votes": 362.951,
-    "year": 2007
-  },
-  {
-    "id": "tt0477080",
-    "link": "https://www.imdb.com/title/tt0477080/?ref_=nm_flmg_act_9",
-    "metascore": 69,
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjI4NDQwMDM0N15BMl5BanBnXkFtZTcwMzY1ODMwNA@@._V1_UX182_CR0,0,182,268_AL_.jpg",
-    "rating": 6.8,
-    "synopsis": "With an unmanned, half-mile-long freight train barreling toward a city, a veteran engineer and a young conductor race against the clock to prevent a catastrophe.",
-    "title": "Unstoppable (2010)",
-    "votes": 171.245,
-    "year": 2010
-  }
-
-]
-```
-
-### `GET /movies/:id`
+#### `GET /movies/:id`
 
 Fetch a specific movie.
 
@@ -132,7 +165,7 @@ Fetch a specific movie.
   }
 ```
 
-### `GET /movies/search`
+#### `GET /movies/search`
 
 Search for Denzel's movies.
 
@@ -185,7 +218,7 @@ The results array should be sorted by metascore in descending way.
 }
 ```
 
-### POST /movies/:id
+#### POST /movies/:id
 
 Save a watched date and a review.
 
@@ -200,3 +233,74 @@ This endpoint accepts the following post parameters:
   "_id": "507f191e810c19729de860ea"
 }
 ```
+
+
+### GraphQL endpoints to implement
+
+Same definitions as REST API with `/graphql` endpoint.
+
+* Populate the database
+* Fetch a random **must-watch** movie
+* Fetch a specific movie
+* Search for Denzel's movies
+* Save a watched date and a review.
+
+#### (A suggested) Schema
+
+```
+schema {
+  query Query
+}
+
+type Query {
+  movies: [Movie]
+  movie: Movie
+}
+
+type Movie {
+  link: String
+  metascore: Int
+  synopsis: String
+  title: String
+  year: Int
+}
+```
+
+```sh
+❯ curl -d '{"query": "movie {link metascore synopsis title year}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
+{
+  "data": {
+    "movie": {
+      "link": "https://www.imdb.com/title/tt0174856/?ref_=nm_flmg_act_23",
+      "metascore": 74,
+      "synopsis": "The story of Rubin \"Hurricane\" Carter, a boxer wrongly imprisoned for murder, and the people who aided in his fight to prove his innocence.",
+      "title": "Hurricane Carter (1999)",
+      "year": 1999
+    }
+  }
+}
+```
+
+### Bonus - The Client side
+
+Build a client side web application.
+
+The MVP definiton could be:
+
+Each time, we open the web application or refresh the page, fetch a random **must-watch** movie and
+
+* display the title
+* display the synopsis
+* display the cover
+* display the metascore
+* display the review
+* allow to open the IMDb record
+
+## 🛣️ Related course
+
+* [Course 7 - API-ness](https://github.com/92bondstreet/javascript-empire#-course-7---api-ness)
+* [Course 8 - Progressive Web App, world of Hybrid](https://github.com/92bondstreet/javascript-empire#-course-8---progressive-web-app-world-of-hybrid)
+
+## Licence
+
+[Uncopyrighted](http://zenhabits.net/uncopyright/)
