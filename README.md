@@ -13,6 +13,124 @@ This project is a micro-service of _Denzel_ project including the [client](https
 
 [Initial README](init-README.md)
 
+## GraphQL endpoints
+
+### `movies_search`
+
+```GRAPHQL
+query{
+  movie_search(limit: 5, metascore: 77) {
+    id,
+    title
+  }
+}
+---
+{
+  "data": {
+    "movie_search": [
+      {
+        "id": "tt0112857",
+        "title": "Le diable en robe bleue (1995)"
+      },
+      {
+        "id": "tt0115956",
+        "title": "À l'épreuve du feu (1996)"
+      },
+      {
+        "id": "tt2671706",
+        "title": "Fences (2016)"
+      }
+    ]
+  }
+}
+```
+
+### `movies`
+```GRAPHQL
+query{
+  movies {
+    title,
+    metascore,
+    synopsis,
+    title,
+    year
+  }
+}
+---
+{
+  "data": {
+    "movies": [
+      {
+        "title": "Philadelphia (1993)",
+        "metascore": 66,
+        "synopsis": "When a man with HIV is fired by his law firm because of his condition, he hires a homophobic small time lawyer as the only willing advocate for a wrongful dismissal suit.",
+        "year": 1993
+      },
+      {
+        "title": "Unstoppable (2010)",
+        "metascore": 69,
+        "synopsis": "With an unmanned, half-mile-long freight train barreling toward a city, a veteran engineer and a young conductor race against the clock to prevent a catastrophe.",
+        "year": 2010
+      },
+      ...
+    ]
+  }
+}
+```
+
+### `movie(!id(int))`
+```graphql
+query{
+ movie(id: "tt0112857") {
+    id,
+    title,
+    metascore,
+    synopsis,
+    title,
+    year
+ }
+}
+---
+"movie": [
+      {
+        "id": "tt0112857",
+        "title": "Le diable en robe bleue (1995)",
+        "metascore": 78,
+        "synopsis": "An African-American man is hired to find a woman, and gets mixed up in a murderous political scandal.",
+        "year": 1995
+      }
+    ]
+```
+
+### `reviewMovie(id(int), review(json))`
+```graphql
+mutation{
+  reviewMovie(id: "tt0112857", review: {date: "2019-03-04", review: "😍 🔥"}){
+    title
+    review
+  }
+}
+---
+{
+  "data": {
+    "reviewMovie": {
+      "title": "Le diable en robe bleue (1995)",
+      "review": {
+        "date": "2019-03-04",
+        "review": "😍 🔥"
+      }
+    }
+  }
+}
+```
+
+### `populateDenzelDb`
+```graphql
+mutation{
+  populateDenzelDb
+}
+```
+
 ## REST endpoints
 
 ### `GET /movies/populate`

@@ -25,7 +25,8 @@ const queryType = new GraphQLObjectType({
       movie: {
           type: new GraphQLList(movieType),
           args: {
-              id: { type: GraphQLString}
+              id: { type: GraphQLString},
+              title: { type: GraphQLString }
           },
           description: "Find movie by id or show a random awesome movie.",
           resolve: function (source, args) {
@@ -41,6 +42,24 @@ const queryType = new GraphQLObjectType({
         description: "Show all movies.",
         resolve: function(source, args){
           return collection.find({}).toArray();
+        }
+      },
+      movie_search: {
+        type: new GraphQLList(movieType),
+        args: {
+            limit: {type: GraphQLInt},
+            metascore: {type: GraphQLInt}
+        },
+        description: "Search movies by limit and metascore",
+        resolve: function (source, args) {
+          var limit = Number(args.limit) || 5;
+          var metascore = Number(args.metascore) || 0;
+          if (limit || metascore) {
+            return collection.aggregate([
+              { "$match": { "metascore": { "$gte": metascore } } },
+              { "$sample": { "size": limit } }
+            ]).toArray();
+          }
         }
       }
     }
