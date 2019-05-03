@@ -3,7 +3,7 @@
 # Denzel API
 > API for Denzel project
 
-You can visit this [link](https://denzel-api.herokuapp.com/movies) to seet it work.
+You can visit this [link](https://denzel-api.herokuapp.com/movies) to seet it working.
 
 [Express](https://expressjs.com/) Node.js web application framework.
 [GraphQL](https://graphql.org/) A query language for API.
